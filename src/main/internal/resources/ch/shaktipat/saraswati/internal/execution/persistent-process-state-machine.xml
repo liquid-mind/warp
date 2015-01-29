@@ -1,0 +1,104 @@
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" initialstate="referencable-parallel">
+
+	<state id="referencable">
+		<initial>
+			<transition target="referencable-parallel"/>
+		</initial>
+		<parallel id="referencable-parallel">
+			<state id="volatility">
+				<initial>
+					<transition target="stable"/>
+				</initial>
+				<state id="stable">
+					<transition event="destabilize" target="volatile"/>
+					<transition event="destroy" target="final"/>
+				</state>
+				<state id="volatile">
+					<transition event="stabilize" target="stable"/>
+				</state>
+			</state>
+			<state id="execution">
+				<initial>
+					<transition target="active"/>
+				</initial>
+				<state id="active">
+					<initial>
+						<transition target="new"/>
+					</initial>
+					<transition event="passivate" target="passive"/>
+					<state id="new">
+						<transition event="start" target="running"/>
+					</state>
+					<state id="pending">
+						<initial>
+							<transition target="animated"/>
+						</initial>
+						<transition event="cancel" target="cancelled"/>
+						<state id="animated">
+							<initial>
+								<transition target="running"/>
+							</initial>
+							<transition event="suspend" target="suspended"/>
+							<state id="running">
+								<initial>
+									<transition target="current-execution-segment-pending"/>
+								</initial>
+								<transition event="sleep" target="sleeping"/>
+								<transition event="join" target="joining"/>
+								<transition event="listen" target="listening"/>
+								<transition event="invoke-non-persistent-method" target="running"/>			<!-- Guard: volatility == volatile -->
+								<transition event="return-from-non-persistent-method" target="running"/>
+								<transition event="invoke-persistent-method" target="running"/>
+								<transition event="return-from-persistent-method" target="running"/>
+								<transition event="set-checkpoint" target="running"/>						<!-- Guard: volatility == volatile -->
+								<state id="current-execution-segment-pending">
+									<transition event="push-segment" target="current-execution-segment-pending"/>
+									<transition event="pop-segment" target="current-execution-segment-terminated"/>
+								</state>
+								<state id="current-execution-segment-terminated">
+									<transition event="continue-with-current-segment" target="current-execution-segment-pending"/>
+									<transition event="process-completed" target="completed"/>
+									<transition event="process-threw-exception" target="threw-exception"/>
+								</state>
+								<history id="continue-running" type="deep"/>
+							</state>
+							<state id="waiting">
+								<initial>
+									<transition target="sleeping"/>
+								</initial>
+								<state id="sleeping">
+									<transition event="sleep-completed" target="continue-running"/>
+								</state>
+								<state id="joining">
+									<transition event="process-joined" target="continue-running"/>
+								</state>
+								<state id="listening">
+									<transition event="event-received" target="continue-running"/>
+								</state>
+							</state>
+							<history id="reanimated" type="deep"/>
+						</state>
+						<state id="suspended">			<!-- Guard: volatility == stable -->
+							<transition event="resume" target="reanimated"/>
+						</state>
+					</state>
+					<state id="terminated">				<!-- Guard: volatility == stable -->
+						<initial>
+							<transition target="completed"/>
+						</initial>
+						<transition event="destroy" target="final"/>
+						<state id="completed"/>
+						<state id="threw-exception"/>
+						<state id="cancelled"/>
+					</state>
+					<history id="reactivated" type="deep"/>
+				</state>
+				<state id="passive">					<!-- Guard: volatility == stable -->
+					<transition event="activate" target="reactivated"/>
+				</state>
+			</state>
+		</parallel>
+	</state>
+	<state id="final" final="true"/>
+
+</scxml>

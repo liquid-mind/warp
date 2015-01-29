@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="PolymorphicProcess" default="" basedir=".">
+
+	<property name="package-prefix" value="polymorphicProcess"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.polymorphicProcess.PolymorphicClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/*.class"/>
+		<exclude name="**/PolymorphicClient.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+	
+	<target name="start-processes" depends="SaraswatiExamples.package">
+		<run-with-args args="startProcesses"/>
+	</target>
+	
+	<target name="send-events" depends="SaraswatiExamples.package">
+		<run-with-args args="sendEvents"/>
+	</target>
+
+</project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="VolatilityInitial" default="" basedir=".">
+
+	<property name="package-prefix" value="volatilityInitial"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.volatility.initial.VolatilityInitialClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/*.class"/>
+		<exclude name="**/VolatilityInitialClient.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+	
+</project>

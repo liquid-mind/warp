@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="SaraswatiExamples" default="" basedir=".">
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+	<property name="src" location="${basedir}"/>
+	<property name="target" location="${basedir}/target"/>
+	<property name="classes" location="${target}/classes"/>
+	<property name="saraswati.base" location="${basedir}/../.."/>
+	<property name="user" location="${saraswati.base}/user"/>
+	<property name="bin" location="${saraswati.base}/bin"/>
+	<property name="lib" location="${saraswati.base}/lib"/>
+
+	<path id="libs">
+		<pathelement location="${bin}/saraswati.jar"/>
+		<pathelement location="${bin}/exwrapper.jar"/>
+		<fileset dir="${lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="libs-run">
+		<path refid="libs"/>
+		<pathelement location="${target}/${package-prefix}Client.jar"/>
+	</path>
+	
+	<target name="init">
+		<mkdir dir="${classes}"/>
+		<if>
+			<equals arg1="${debug}" arg2="true"/>
+			<then>
+				<property name="regular.jvm.debug.arg" value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"/>
+			</then>
+			<else>
+				<property name="regular.jvm.debug.arg" value=""/>
+			</else>
+		</if>
+	</target>
+	
+	<macrodef name="saraswati-compile">
+		<attribute name="srcdir" default="${src}"/>
+		<attribute name="destdir" default="${classes}"/>
+		<attribute name="classpathref" default="${libs}"/>
+		<sequential>
+			<javac includeantruntime="false" srcdir="@{srcdir}" destdir="${classes}" classpathref="libs"
+				debug="on" debuglevel="lines,vars,source" encoding="UTF8"/>
+		</sequential>
+	</macrodef>
+
+	<target name="compile" depends="init">
+		<saraswati-compile/>
+	</target>
+	
+	<macrodef name="saraswati-package">
+		<attribute name="target"/>
+		<attribute name="source"/>
+		<attribute name="patternset"/>
+		<sequential>
+			<jar destfile="@{target}">
+				<fileset dir="@{source}">
+					<patternset refid="@{patternset}"/>
+				</fileset>
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<target name="package" depends="compile">
+		<saraswati-package target="${target}/${package-prefix}Server.jar" source="${classes}" patternset="server-resources"/>
+		<saraswati-package target="${target}/${package-prefix}Client.jar" source="${classes}" patternset="client-resources"/>
+	</target>
+	
+	<macrodef name="saraswati-deploy">
+		<attribute name="source"/>
+		<attribute name="target"/>
+		<attribute name="host"/>
+		<attribute name="port"/>
+		<sequential>
+			<copy file="@{source}" todir="@{target}"/>
+			<tempfile property="restart.response"/>
+			<get src="http://@{host}:@{port}/ServerPage?command=restart" dest="${restart.response}"/>
+		</sequential>
+	</macrodef>
+
+	<target name="deploy" depends="package">
+		<saraswati-deploy source="${target}/${package-prefix}Server.jar" target="${user}" host="localhost" port="8080"/>
+	</target>
+
+	<macrodef name="saraswati-run-java">
+		<attribute name="main" default="${client-main}"/>
+		<attribute name="args" default=""/>
+		<attribute name="classpath" default="libs-run"/>
+		<sequential>
+			<java classname="@{main}" fork="true">
+				<jvmarg line="${regular.jvm.debug.arg}"/>
+				<arg line="@{args}"/>
+				<classpath>
+					<path refid="@{classpath}"/>
+				</classpath>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-with-args">
+		<attribute name="args"/>
+		<sequential>
+			<saraswati-run-java args="@{args}"/>
+		</sequential>
+	</macrodef>
+
+	<target name="run" depends="package">
+		<saraswati-run-java/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${target}"/>
+	</target>
+		
+</project>

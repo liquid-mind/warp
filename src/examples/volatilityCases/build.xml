@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="VolatilityCases" default="" basedir=".">
+
+	<property name="package-prefix" value="volatilityCases"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.volatility.cases.VolatilityCasesClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/VolatilityCasesRunnable.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+
+</project>

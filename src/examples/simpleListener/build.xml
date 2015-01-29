@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="SimpleListener" default="" basedir=".">
+
+	<property name="package-prefix" value="simpleListener"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.simpleListener.SimpleListenerClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/SimpleListenerRunnable.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+	
+	<target name="start-process" depends="SaraswatiExamples.package">
+		<run-with-args args="startProcess"/>
+	</target>
+	
+	<target name="send-event" depends="SaraswatiExamples.package">
+		<run-with-args args="sendEvent"/>
+	</target>
+
+</project>

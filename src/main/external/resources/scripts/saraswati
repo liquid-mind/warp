@@ -1,0 +1,61 @@
+#!/bin/bash
+
+SARASWATI_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+
+BIN=${SARASWATI_HOME}/bin
+LIB=${SARASWATI_HOME}/lib
+
+CLASSPATH=${BIN}/saraswati.jar
+CLASSPATH=${CLASSPATH}:${LIB}/exwrapper.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-beanutils-1.8.3.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-collections-3.2.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-configuration-1.8.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-digester-1.8.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-io-2.4.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-jexl-1.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-lang-2.6.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-logging-1.1.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/commons-scxml-0.9.jar
+CLASSPATH=${CLASSPATH}:${LIB}/findbugs-2.0.3.jar
+CLASSPATH=${CLASSPATH}:${LIB}/guava-16.0.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/javassist-3.18.0-GA.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-annotations-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-client-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-continuation-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-deploy-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-http-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-io-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-jaas-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-jaspi-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-jmx-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-jndi-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-plus-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-proxy-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-rewrite-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-schemas-3.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-security-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-server-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-servlet-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-servlets-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-util-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-webapp-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/jetty-xml-9.1.2.v20140210.jar
+CLASSPATH=${CLASSPATH}:${LIB}/junit-4.7.jar
+CLASSPATH=${CLASSPATH}:${LIB}/reflections-0.9.9-RC1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/servlet-api-3.1.jar
+CLASSPATH=${CLASSPATH}:${LIB}/xalan-2.6.0.jar
+
+SARASWATI_HOME_PROP=-Dch.shaktipat.saraswati.saraswatiHome=${SARASWATI_HOME}
+LOGGING_PROP=-Djava.util.logging.config.file=${SARASWATI_HOME}/conf/logging.properties
+LOGMANAGER_PROP=-Djava.util.logging.manager=ch.shaktipat.saraswati.internal.engine.SaraswatiLogManager
+
+for arg in "$@" ; do
+  if [ "$arg" = "-debug" ] ; then
+    DEBUG="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"
+  fi
+done
+
+cd ${SARASWATI_HOME}
+mkdir -p ${SARASWATI_HOME}/logs
+
+java -classpath ${CLASSPATH} ${DEBUG} ${SARASWATI_HOME_PROP} ${LOGGING_PROP} ${LOGMANAGER_PROP} ch.shaktipat.saraswati.internal.engine.SaraswatiServer $*

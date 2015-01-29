@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="LifecycleAndFutures" default="" basedir=".">
+
+	<property name="package-prefix" value="lifecycleAndFutures"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.lifecycleAndFutures.LifecycleAndFuturesClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/LifecycleAndFuturesRunnable.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+
+</project>

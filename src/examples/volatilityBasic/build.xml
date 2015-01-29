@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="VolatilityBasic" default="" basedir=".">
+
+	<property name="package-prefix" value="volatilityBasic"/>
+	<property name="client-main" value="ch.shaktipat.saraswati.example.volatility.basic.VolatilityBasicClient"/>
+	
+	<patternset id="server-resources">
+		<include name="**/VolatilityBasicRunnable.class"/>
+	</patternset>
+
+	<patternset id="client-resources">
+		<include name="**/*.class"/>
+	</patternset>
+	
+	<import file="../scripts/build.xml"/>
+
+	<target name="run" depends="SaraswatiExamples.package">
+		<run-with-args args="${src}/ch/shaktipat/saraswati/example/volatility/basic/volatile-resource.txt"/>
+	</target>
+	
+</project>

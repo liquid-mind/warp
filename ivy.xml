@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ivy-module version="2.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+        
+        <info organisation="liquidmind" module="warp" status="integration"/>
+
+		<!-- ommitted: jetty-schemas-3.1.jar, jps libs -->
+        
+        <dependencies>
+			<dependency org="org.apache.ant" name="ant" rev="1.9.3" conf="default"/>
+			<dependency org="org.apache.ant" name="ant-junit" rev="1.9.3" conf="default"/>
+			<dependency org="commons-beanutils" name="commons-beanutils" rev="1.8.3" conf="default"/>
+			<dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="default"/>
+			<dependency org="commons-configuration" name="commons-configuration" rev="1.8" conf="default"/>
+			<dependency org="commons-digester" name="commons-digester" rev="1.8.1" conf="default"/>
+			<dependency org="commons-io" name="commons-io" rev="2.4" conf="default"/>
+			<dependency org="commons-jexl" name="commons-jexl" rev="1.1" conf="default"/>
+			<dependency org="commons-lang" name="commons-lang" rev="2.6" conf="default"/>
+			<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="default"/>
+			<dependency org="commons-scxml" name="commons-scxml" rev="0.9" conf="default"/>
+			<dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="default"/>
+			<dependency org="com.google.guava" name="guava" rev="16.0.1" conf="default"/>
+			<dependency org="org.javassist" name="javassist" rev="3.18.0-GA" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-annotations" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-client" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-continuation" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-deploy" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-http" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-io" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-jaas" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-jaspi" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-jmx" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-jndi" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-plus" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-proxy" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-rewrite" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-security" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-server" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-util" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-webapp" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="org.eclipse.jetty" name="jetty-xml" rev="9.1.2.v20140210" conf="default"/>
+			<dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" conf="default"/>
+			<dependency org="junit" name="junit" rev="4.7" conf="default"/>
+			<dependency org="org.reflections" name="reflections" rev="0.9.9" conf="default"/>
+			<dependency org="xalan" name="xalan" rev="2.6.0" conf="default"/>
+        </dependencies>
+        
+</ivy-module>
