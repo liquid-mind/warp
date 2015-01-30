@@ -68,6 +68,7 @@ public class StackTraceUserSpaceTest
 		validateStackTracesEqual( expectedStackTrace, actualStackTrace );
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void testException() throws InterruptedException, ExecutionException
 	{
 		StackTraceElement[] expectedStackTrace = new StackTraceElement[] {
@@ -107,6 +108,7 @@ public class StackTraceUserSpaceTest
 		return new StackTraceElement( theClass.getName(), methodName, theClass.getSimpleName() + ".java", lineNumber );
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void validateStackTracesEqual( StackTraceElement[] expectedStackTrace, StackTraceElement[] actualStackTrace )
 	{
 		assertNotNull( expectedStackTrace );
